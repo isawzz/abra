@@ -1,0 +1,21 @@
+body,
+html {
+	margin: 0;
+	padding: 0;
+	height: 100vh;
+	position: relative;
+	font-family: 'Lato', sans-serif;
+	color: white;
+	background: silver;
+	box-sizing: border-box;
+}
+.vertical-center {
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+.unset {
+	all: unset;
+}
