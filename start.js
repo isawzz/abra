@@ -3,26 +3,50 @@ window.onload = start;
 async function start() {
 
 	let comp = qTable(mBy('dMain'), qOptions());
-	let dTable = comp.dTable;
+	let dContent = comp.dContent;
+	//mCenterCenterFlex(dTable);
 
-	let [sidebar, dSidebar] = [comp.sidebar, iDiv(comp.sidebar)];
-	console.log('sidebar', sidebar);
-	sidebar.open();
-	for (const link of ['link1', 'link2', 'link3']) {
-		mAppend(dSidebar, createElementFromHtml(`<a style='display:block'>${link} href='#'</a>`));
+	let sidebar = comp.sidebar;
+
+	//sidebar.open(null, false);
+
+	let styles = { hpadding: 12, vpadding: 4, fz: 20 };
+	for (const link of ['short', 'link3super superlang dasdasdas', 'short']) {
+		sidebar.addContent(`<a href='#'>${link}</a>`, styles);
+	}
+
+	sidebar.open(null, false);
+
+	console.log('dContent', dContent);
+	mStyleX(dContent, { bg: wyellow, position: 'relative' });
+	let dTable = mDiv100(dContent);
+	mStyleX(dContent, { hmin: 5 * 400 });
+
+	// let d3 = mDiv(dTable, { position: 'absolute', left: 40, top: 4, bg: 'pink', w: 300, h: 300 });
+
+	// mCenterFlex(dTable);
+	// let tileStyles = { bg: 'pink', w: 300, h: 300, margin: 20 };
+	// let d1 = mDiv(dTable, tileStyles);
+	// let d2 = mDiv(dTable, tileStyles);
+	// mGap(dTable, 10);
+	// let d3 = mDiv(dTable, tileStyles);
+	// let d4 = mDiv(dTable, tileStyles);
+	// iMenuSidebarDiv(d1, qOptions())
+	// iMenuSidebarDiv(d4, qOptions())
+
+	mCenterFlex(dTable);
+	let tileStyles1 = { bg: 'pink', w: 300, h: 300, margin: 20 };
+	let [rows, cols] = [5, 5];
+	for (let r = 0; r < rows; r++) {
+		for (let c = 0; c < cols; c++) {
+			let d1 = mDiv(dTable, tileStyles1);
+			if (coin()) iMenuSidebarDiv(d1, qOptions());
+		}
+		mGap(dTable, 0);
 	}
 
 
-}
-function qTable(dParent, options) {
 
-	//test07_menu_sidebar_div();
-	mStyleX(dParent, { h: '100%', w: '100%', box: true, bg: 'silver' }); //, padding: 10 });
-	setRect(dParent);
-
-	let item = iMenuSidebarDiv(dParent, options);
-
-	return { item: item, sidebar: iGetl(item, 'sidebar'), dTable: iGetl(item, 'dContent'), dMenu: iGetl(item, 'dMenu') };
 
 }
 function iMenuSidebarDiv(dParent, options) {
@@ -46,6 +70,28 @@ function iMenuSidebarDiv(dParent, options) {
 	let sb = iSidebar(dSide, dContent, b, 120, false);
 
 	let item = mItem(getUID('comp'), { div: d0, button: b, dMenu: dMenu, sidebar: sb, dContent: dContent }, { type: 'component' });
+	return item;
+}
+function iButtonSidebarDiv(dParent, bCaption = '☰', bStyles = { fz: 30 }, sbStyles = { bg: wpink }, divStyles = {}, outerStyles = { matop: 4, bg: wgrey }) {
+
+	let d0 = mDiv100(dParent);
+
+	//let dMenu = mDiv(d0);
+	let b = mButton(bCaption, null, d0, bStyles, 'mybutton', getUID('b'));
+
+	outerStyles.position = 'relative';
+	//let d = mDiv100(dMain, { matop: 4, position: 'relative', });
+	let h = getRect(d0).h - (getRect(b).h + outerStyles.matop);
+	outerStyles.h = h;
+
+	let d = mDiv(d0, outerStyles); //mStyleX(d, { h: h })
+
+	let dSide = mDiv(d, sbStyles);
+	let dContent = mDiv(d, divStyles, getUID());
+
+	let sb = iSidebar(dSide, dContent, b, 120, false);
+
+	let item = mItem(getUID('comp'), { div: d0, button: b, sidebar: sb, dContent: dContent }, { type: 'component' });
 	return item;
 }
 

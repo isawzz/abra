@@ -3136,7 +3136,22 @@ function setRect(elem, options) {
 		else if (options.wshrink) mStyleX(elem, { wmax: r.w });
 	}
 }
-
+function getSizeNeeded(elem) {
+	var d = elem.cloneNode(true); //document.createElement("div");
+	d.style.width = 'auto';
+	document.body.appendChild(d);
+	//console.log(styles);
+	let cStyles = {};
+	cStyles.position = 'fixed';
+	cStyles.opacity = 0;
+	cStyles.top = '-9999px';
+	mStyleX(d, cStyles);
+	//d.innerHTML = text;
+	height = d.clientHeight;
+	width = d.clientWidth;
+	d.parentNode.removeChild(d);
+	return { w: Math.round(width), h: Math.round(height) };
+}
 function getSizeWithStyles(text, styles) {
 	var d = document.createElement("div");
 	document.body.appendChild(d);
